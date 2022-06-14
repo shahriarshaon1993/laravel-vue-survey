@@ -4,5 +4,6 @@ This is learn vue js with laravel API.
 
 - Install `composer create-project laravel/laravel:^8.0 laravel-vue-servuy`
 - Install `npm init vite vue`
+- Install `npm install -S vue@next`
 
 The dashboard is private software licensed under the [MIT license](https://opensource.org/licenses/MIT).
