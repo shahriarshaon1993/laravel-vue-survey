@@ -9,5 +9,6 @@ This is learn vue js with laravel API.
 - Install `npx tailwindcss init -p`
 - Install `npm install @headlessui/vue @heroicons/vue @tailwindcss/forms -S`
 - Install `npm install -S vue-router@next`
+- Install `npm install -S axios`
 
 The dashboard is private software licensed under the [MIT license](https://opensource.org/licenses/MIT).
