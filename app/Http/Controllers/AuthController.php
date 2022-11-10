@@ -35,11 +35,6 @@ class AuthController extends Controller
         ]);
     }
 
-    /**
-     * For Login
-     * @param Request $request
-     */
-
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -66,14 +61,13 @@ class AuthController extends Controller
         ]);
     }
 
-    /**
-     * For logout auth user
-     */
-
     public function logout()
     {
         /** @var User $user */
         $user = Auth::user();
+
+        // return $user;
+
         // Revoke the token that was used to authentication the current request
         $user->currentAccessToken()->delete();
 

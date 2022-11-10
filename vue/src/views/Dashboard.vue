@@ -1,9 +1,13 @@
 <template>
-  <PageComponent title="Dashboard">
-    Content goes that area
-  </PageComponent>
+    <PageComponent title="Dashboard">
+        <p>Dashboard content goes that area</p>
+    </PageComponent>
 </template>
 
 <script setup>
-  import PageComponent from "../components/PageComponent.vue";
+    import PageComponent from '@/components/PageComponent.vue';
 </script>
+
+<style>
+
+</style>
