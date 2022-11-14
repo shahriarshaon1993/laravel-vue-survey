@@ -8,7 +8,7 @@
             </div>
         </template>
 
-        <form>
+        <form @submit.prevent="saveSurvey">
             <div class="shadow sm:rounded-md sm:overflow-hidden">
                 <!-- Survey Field -->
                 <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
@@ -118,9 +118,10 @@ import QuestionEditor from "@/components/editor/QuestionEditor.vue";
 import store from "../store";
 import { v4 as uuidv4 } from 'uuid';
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute , useRouter } from "vue-router";
 
-const route = useRouter();
+const router = useRouter();
+const route = useRoute();
 
 // create empty survey
 const model = ref({
@@ -131,7 +132,7 @@ const model = ref({
     questions: []
 });
 
-let id = route.currentRoute.value.params.id;
+let id = route.params.id;
 
 if (id) {
     model.value = store.state.surveys.find((s) => s.id === parseInt(id));
@@ -163,6 +164,19 @@ function questionChange(question) {
     });
 
     return q;
+}
+
+/**
+ * Create or update survey
+ */
+
+function saveSurvey() {
+    store.dispatch("saveSurvey", model.value).then(({ data }) => {
+        router.push({
+            name: 'SurveyView',
+            params: { id: data.data.id }
+        });
+    });
 }
 
 </script>
