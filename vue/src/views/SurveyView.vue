@@ -13,6 +13,7 @@
                 <!-- Survey Field -->
                 <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                     <!-- Image -->
+                    <pre>{{ model }}</pre>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">
                             Image
@@ -117,7 +118,7 @@ import PageComponent from "@/components/PageComponent.vue";
 import QuestionEditor from "@/components/editor/QuestionEditor.vue";
 import store from "../store";
 import { v4 as uuidv4 } from 'uuid';
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRoute , useRouter } from "vue-router";
 
 const router = useRouter();
@@ -128,14 +129,23 @@ const model = ref({
     title: '',
     status: false,
     descriptiion: null,
-    image: null,
+    image_url: null,
     questions: []
 });
 
-let id = route.params.id;
+// Watch to current survey data change and when this happens we update local
+watch(
+    () => store.state.currentSurvey.data,
+    (newVal, oldVal) => {
+        model.value = {
+            ...JSON.parse(JSON.stringify(newVal)),
+            status: newVal.status !== "draft"
+        };
+    }
+);
 
-if (id) {
-    model.value = store.state.surveys.find((s) => s.id === parseInt(id));
+if (route.params.id) {
+    store.dispatch('getSurvey', route.params.id);
 }
 
 function onImageChoose(ev) {
