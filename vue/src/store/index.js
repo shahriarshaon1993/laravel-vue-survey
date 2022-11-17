@@ -145,6 +145,7 @@ const store = createStore({
     getters: {},
     actions: {
         saveSurvey({ commit }, survey) {
+            delete survey.image_url;
             let response;
 
             if(survey.id) {
@@ -156,7 +157,7 @@ const store = createStore({
             }else {
                 response = axiosClient.post("/survey", survey)
                     .then((res) => {
-                        commit("saveSurvey", res.date);
+                        commit("saveSurvey", res.data);
                         return res;
                     })
             }
