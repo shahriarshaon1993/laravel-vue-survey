@@ -3,17 +3,18 @@
         <template v-slot:header>
             <div class="flex items-center justify-between">
                 <div class="text-3xl font-bold text-gray-900">
-                    {{ model.id ? model.title : 'Create a servey' }}
+                    {{ route.params.id ? model.title : 'Create a servey' }}
                 </div>
             </div>
         </template>
 
-        <form @submit.prevent="saveSurvey">
+        <div v-if="surveyLoading" class="flex justify-center">Loading...</div>
+
+        <form v-else @submit.prevent="saveSurvey">
             <div class="shadow sm:rounded-md sm:overflow-hidden">
                 <!-- Survey Field -->
                 <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                     <!-- Image -->
-                    <pre>{{ model }}</pre>
                     <div>
                         <label class="block text-sm font-medium text-gray-700">
                             Image
@@ -118,11 +119,13 @@ import PageComponent from "@/components/PageComponent.vue";
 import QuestionEditor from "@/components/editor/QuestionEditor.vue";
 import store from "../store";
 import { v4 as uuidv4 } from 'uuid';
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRoute , useRouter } from "vue-router";
 
 const router = useRouter();
 const route = useRoute();
+
+const surveyLoading = computed(() => store.state.currentSurvey.loading);
 
 // create empty survey
 const model = ref({
