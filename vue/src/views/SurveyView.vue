@@ -2,9 +2,16 @@
     <PageComponent>
         <template v-slot:header>
             <div class="flex items-center justify-between">
-                <div class="text-3xl font-bold text-gray-900">
+                <h1 class="text-3xl font-bold text-gray-900">
                     {{ route.params.id ? model.title : 'Create a servey' }}
-                </div>
+                </h1>
+                <button
+                    type="button"
+                    @click="deleteSurvey()"
+                    class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
+                    <svg class="w-5 h-5 -mt-1 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    Delete Survey
+                </button>
             </div>
         </template>
 
@@ -204,6 +211,20 @@ function saveSurvey() {
             params: { id: data.data.id }
         });
     });
+}
+
+/**
+ * Delete survey
+ */
+
+function deleteSurvey() {
+    if(confirm(`Are you sure you want to delete this survey ?`)) {
+        store.dispatch('deleteSurvey', model.value.id).then(() => {
+            router.push({
+                name: "Surveys"
+            });
+        });
+    }
 }
 
 </script>
