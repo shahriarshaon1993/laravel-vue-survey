@@ -7,7 +7,7 @@
 
         <div class="flex items-center">
             <!-- Add new questions -->
-            <button type="button" @click="addQuestion"
+            <button type="button" @click="addQuestion()"
                 class="flex items-center text-xs py-1 px-3 mr-2 rounded-sm text-white bg-gray-600 hover:bg-gray-700">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
@@ -18,7 +18,7 @@
             <!--/. Add new questions -->
 
             <!-- Delete question -->
-            <button type="button" @click="deleteQuestion"
+            <button type="button" @click="deleteQuestion()"
                 class="flex items-center text-xs py-1 px-3 rounded-sm border border-transparent text-red-500 hover:text-red-500">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
@@ -39,7 +39,7 @@
                 Question Text
             </label>
             <input type="text" :name="'question_text_' + model.data" :id="'question_text_' + model.data"
-                v-model="model.question" @change="dataChange"
+                v-model="model.question" @change="dataChange()"
                 class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
         </div>
         <!--/. Question -->
@@ -63,7 +63,7 @@
         <label :for="'question_text_' + model.id" class="block text-sm font-medium text-gary-700">
             Description
         </label>
-        <textarea :name="'question_text_' + model.id" v-model="model.description" @change="dataChange"
+        <textarea :name="'question_text_' + model.id" v-model="model.description" @change="dataChange()"
             :id="'question_text_' + model.id"
             class="mt-1 p-2 focus:ring-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
     </div>
@@ -94,7 +94,7 @@
             <!-- Options list -->
             <div v-for="(option, index) in model.data.options" :key="option.uuid" class="flex items-center mb-1">
                 <span class="w-6 text-sm">{{ index + 1 }}</span>
-                <input type="text" v-model="option.text" @change="dataChange"
+                <input type="text" v-model="option.text" @change="dataChange()"
                     class="w-full rounded-sm py-1 px-2 text-xs border border-gray-300 focus:border-indigo-500">
 
                 <!-- Delete option -->

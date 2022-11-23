@@ -175,10 +175,10 @@ function onImageChoose(ev) {
 function addQuestion(index) {
     const newQuestion = {
         id: uuidv4(),
-        type: 'text',
-        question: '',
+        type: "text",
+        question: "",
         description: null,
-        data: null
+        data: {}
     };
 
     model.value.questions.splice(index, 0, newQuestion);
@@ -195,9 +195,9 @@ function questionChange(question) {
         if(q.id === question.id) {
             return JSON.parse(JSON.stringify(question));
         }
-    });
 
-    return q;
+        return q;
+    });
 }
 
 /**
