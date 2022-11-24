@@ -21,6 +21,7 @@
                     v-for="survey in surveys"
                     :key="survey.id"
                     :survey="survey"
+                    class="opacity-0 animate-fade-in-down"
                     @delete="deleteSurvey(survey)"
                 />
             </div>

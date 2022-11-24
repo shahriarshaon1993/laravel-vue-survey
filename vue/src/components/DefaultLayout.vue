@@ -84,10 +84,13 @@
         </Disclosure>
 
         <router-view></router-view>
+
+        <Notification/>
     </div>
 </template>
-  
+
 <script>
+import Notification from '@/components/Notification.vue';
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { useStore } from "vuex";
 import { computed } from "vue";
@@ -107,7 +110,8 @@ export default {
         Menu,
         MenuButton,
         MenuItem,
-        MenuItems
+        MenuItems,
+        Notification
     },
     setup() {
         const store = useStore();

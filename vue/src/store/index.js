@@ -15,7 +15,12 @@ const store = createStore({
             loading: false,
             data: {}
         },
-        questionTypes: ["text", "select", "radio", "checkbox", "textarea"]
+        questionTypes: ["text", "select", "radio", "checkbox", "textarea"],
+        notification: {
+            show: false,
+            type: null,
+            message: null
+        }
     },
     getters: {},
     actions: {
@@ -40,7 +45,7 @@ const store = createStore({
             if(survey.id) {
                 response = axiosClient.put(`/survey/${survey.id}`, survey)
                     .then((res) => {
-                        commit("setCurrentSurvey", res.date);
+                        commit("setCurrentSurvey", res.data);
                         return res;
                     })
             }else {
@@ -117,6 +122,15 @@ const store = createStore({
             state.user.data = userData.user;
 
             sessionStorage.setItem('TOKEN', userData.token);
+        },
+
+        notify: (state, { message, type }) => {
+            state.notification.show = true;
+            state.notification.type = type;
+            state.notification.message = message;
+            setTimeout(() => {
+                state.notification.show = false;
+            }, 3000);
         }
     },
     modules: {}
