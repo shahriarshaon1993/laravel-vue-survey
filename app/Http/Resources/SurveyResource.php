@@ -20,7 +20,7 @@ class SurveyResource extends JsonResource
             'image_url' => $this->image ? URL::to($this->image) : null,
             'title' => $this->title,
             'slug' => $this->slug,
-            'slug' => $this->status !== 'draft',
+            'status' => $this->status !== 'draft',
             'description' => $this->description,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
