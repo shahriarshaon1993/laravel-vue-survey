@@ -12,6 +12,8 @@
                 </div>
             </div>
 
+
+
             <div v-if="surveyFinished"
                 class="py-8 px-6 bg-emerald-400 text-white w-[600px] mx-auto"
             >
@@ -62,7 +64,7 @@
     const loading = computed(() => store.state.currentSurvey.loading);
     const survey = computed(() => store.state.currentSurvey.data);
 
-    const sueveyFinished = ref(false);
+    const surveyFinished = ref(false);
 
     const answers = ref({});
 
@@ -75,7 +77,7 @@
             answers: answers.value,
         }).then((response) => {
             if(response.status === 201) {
-                sueveyFinished.value = true;
+                surveyFinished.value = 'hello';
             }
         })
     }
@@ -83,7 +85,7 @@
     function submitAnotherReaponse()
     {
         answers.value = {};
-        sueveyFinished.value = false;
+        surveyFinished.value = false;
     }
 </script>
 
