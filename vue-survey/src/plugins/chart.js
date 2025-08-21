@@ -1,24 +1,3 @@
-import {
-    Chart as ChartJS,
-    Title,
-    Tooltip,
-    Legend,
-    LineElement,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    ArcElement,
-    BarElement,
-} from "chart.js";
+import { Chart, registerables } from "chart.js";
 
-ChartJS.register(
-    Title,
-    Tooltip,
-    Legend,
-    LineElement,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    ArcElement,
-    BarElement
-);
+Chart.register(...registerables);
