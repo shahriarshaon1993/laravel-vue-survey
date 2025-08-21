@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use DateTime;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class SurveyResource extends JsonResource
 {
@@ -21,12 +22,18 @@ class SurveyResource extends JsonResource
             'image_url' => $this->image ? URL::to($this->image) : null,
             'title' => $this->title,
             'slug' => $this->slug,
-            'status' => $this->status !== 'draft',
+            'status' => $this->status,
             'description' => $this->description,
+            'short_description' => $this->wordsLimit($this->description),
             'created_at' => (new DateTime($this->created_at))->format('Y-m-d H:i:s'),
             'updated_at' => (new DateTime($this->updated_at))->format('Y-m-d H:i:s'),
             'expire_date' => $this->expire_date,
             'questions' => SurveyQuestionResource::collection($this->questions)
         ];
+    }
+
+    public function wordsLimit($text, $limit = 100, $end = '...')
+    {
+        return Str::words(strip_tags($text), $limit, $end);
     }
 }
