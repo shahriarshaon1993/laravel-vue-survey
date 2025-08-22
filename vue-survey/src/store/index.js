@@ -4,55 +4,58 @@ import axiosClient from "../axios";
 const store = createStore({
     state: {
         user: {
-            data: {},
-            token: sessionStorage.getItem('TOKEN')
+            data: JSON.parse(sessionStorage.getItem("USER")),
+            token: sessionStorage.getItem("TOKEN"),
         },
         dashboard: {
             loading: false,
-            data: {}
+            data: {},
         },
         currentSurvey: {
             loading: false,
-            data: {}
+            data: {},
         },
         surveys: {
             loading: false,
             links: [],
-            data: []
+            data: [],
         },
         questionTypes: ["text", "select", "radio", "checkbox", "textarea"],
         notification: {
             show: false,
             type: null,
-            message: null
-        }
+            message: null,
+        },
     },
     getters: {},
     actions: {
         getDashboardData({ commit }) {
-            commit('dashboardLoading', true);
-            return axiosClient.get('/dashboard')
+            commit("dashboardLoading", true);
+            return axiosClient
+                .get("/dashboard")
                 .then((res) => {
-                    commit('dashboardLoading', false);
-                    commit('setDashboardData', res.data);
+                    commit("dashboardLoading", false);
+                    commit("setDashboardData", res.data);
                     return res;
                 })
-                .catch(error => {
-                    commit('dashboardLoading', false);
+                .catch((error) => {
+                    commit("dashboardLoading", false);
                     return error;
                 });
         },
         getSurvey({ commit }, id) {
-            commit('setCurrentSurveyLoading', true);
+            commit("setCurrentSurveyLoading", true);
 
-            return axiosClient.get(`/survey/${id}`)
+            return axiosClient
+                .get(`/survey/${id}`)
                 .then((res) => {
-                    commit('setCurrentSurvey', res.data);
-                    commit('setCurrentSurveyLoading', false);
+                    commit("setCurrentSurvey", res.data);
+                    commit("setCurrentSurveyLoading", false);
 
                     return res;
-                }).catch((err) => {
-                    commit('setCurrentSurveyLoading', false);
+                })
+                .catch((err) => {
+                    commit("setCurrentSurveyLoading", false);
                     throw err;
                 });
         },
@@ -60,29 +63,29 @@ const store = createStore({
             delete survey.image_url;
             let response;
 
-            if(survey.id) {
-                response = axiosClient.put(`/survey/${survey.id}`, survey)
+            if (survey.id) {
+                response = axiosClient
+                    .put(`/survey/${survey.id}`, survey)
                     .then((res) => {
                         commit("setCurrentSurvey", res.data);
                         return res;
-                    })
-            }else {
-                response = axiosClient.post("/survey", survey)
-                    .then((res) => {
-                        commit("setCurrentSurvey", res.data);
-                        return res;
-                    })
+                    });
+            } else {
+                response = axiosClient.post("/survey", survey).then((res) => {
+                    commit("setCurrentSurvey", res.data);
+                    return res;
+                });
             }
 
             return response;
         },
-        getSurveys({commit}, {url = null} = {}) {
-            url = url || '/survey';
-            commit('setSurveysLoading', true);
+        getSurveys({ commit }, { url = null } = {}) {
+            url = url || "/survey";
+            commit("setSurveysLoading", true);
 
             return axiosClient.get(url).then((res) => {
-                commit('setSurveysLoading', false);
-                commit('setSurveys', res.data);
+                commit("setSurveysLoading", false);
+                commit("setSurveys", res.data);
 
                 return res;
             });
@@ -105,30 +108,27 @@ const store = createStore({
                     throw err;
                 });
         },
-        saveSurveyAnswer({commit}, { surveyId, answers }) {
+        saveSurveyAnswer({ commit }, { surveyId, answers }) {
             return axiosClient.post(`/survey/${surveyId}/answer`, { answers });
         },
         register({ commit }, user) {
-            return axiosClient.post('/register', user)
-                .then(({ data }) => {
-                    commit('setUser', data)
-                    return data;
-                })
+            return axiosClient.post("/register", user).then(({ data }) => {
+                commit("setUser", data);
+                return data;
+            });
         },
         login({ commit }, user) {
-            return axiosClient.post('/login', user)
-                .then(({ data }) => {
-                    commit('setUser', data)
-                    return data;
-                })
+            return axiosClient.post("/login", user).then(({ data }) => {
+                commit("setUser", data);
+                return data;
+            });
         },
         logout({ commit }) {
-            return axiosClient.post('/logout')
-                .then(response => {
-                    commit('logout')
-                    return response;
-                })
-        }
+            return axiosClient.post("/logout").then((response) => {
+                commit("logout");
+                return response;
+            });
+        },
     },
     mutations: {
         dashboardLoading: (state, loading) => {
@@ -156,18 +156,20 @@ const store = createStore({
             state.surveys.data = surveys.data;
         },
 
-        logout: state => {
+        logout: (state) => {
             state.user.data = {};
             state.user.token = null;
 
-            sessionStorage.removeItem('TOKEN');
+            sessionStorage.removeItem("USER");
+            sessionStorage.removeItem("TOKEN");
         },
 
         setUser: (state, userData) => {
             state.user.token = userData.token;
             state.user.data = userData.user;
 
-            sessionStorage.setItem('TOKEN', userData.token);
+            sessionStorage.setItem("TOKEN", userData.token);
+            sessionStorage.setItem("USER", JSON.stringify(userData.user));
         },
 
         notify: (state, { message, type }) => {
@@ -177,9 +179,9 @@ const store = createStore({
             setTimeout(() => {
                 state.notification.show = false;
             }, 3000);
-        }
+        },
     },
-    modules: {}
+    modules: {},
 });
 
 export default store;
