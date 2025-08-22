@@ -1,5 +1,8 @@
 <script setup>
 import ApplicationLogo from "@/components/icons/ApplicationLogo.vue";
+import { useAuthentication } from "@/composables/useAuthentication";
+
+const { isAdmin, isAuth } = useAuthentication();
 </script>
 
 <template>
@@ -26,6 +29,7 @@ import ApplicationLogo from "@/components/icons/ApplicationLogo.vue";
                 >
                     <li>
                         <RouterLink
+                            v-if="isAdmin"
                             :to="{ name: 'Dashboard' }"
                             class="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700"
                         >
@@ -34,6 +38,7 @@ import ApplicationLogo from "@/components/icons/ApplicationLogo.vue";
                     </li>
                     <li>
                         <RouterLink
+                            v-if="!isAuth"
                             :to="{ name: 'Login' }"
                             class="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700"
                         >
@@ -42,6 +47,7 @@ import ApplicationLogo from "@/components/icons/ApplicationLogo.vue";
                     </li>
                     <li>
                         <RouterLink
+                            v-if="!isAuth"
                             :to="{ name: 'Register' }"
                             class="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700"
                         >
