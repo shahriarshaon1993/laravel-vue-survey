@@ -23,7 +23,6 @@ class AuthController extends Controller
             ]
         ]);
 
-        $token = '';
         $user = DB::transaction(function () use ($data) {
             $user = User::create([
                 'name' => $data['name'],
@@ -33,10 +32,10 @@ class AuthController extends Controller
 
             $user->roles()->attach(2);
 
-            $token = $user->createToken('main')->plainTextToken;
-
             return $user;
         });
+
+        $token = $user->createToken('main')->plainTextToken;
 
         return response([
             'user' => new UserResource($user),

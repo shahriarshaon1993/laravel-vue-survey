@@ -2,7 +2,7 @@
 import PageComponent from "@/components/PageComponent.vue";
 import SurveyListItem from "@/components/SurveyListItem.vue";
 import { computed } from "vue";
-import store from "../store";
+import store from "../../store";
 import PrimaryLink from "@/components/PrimaryLink.vue";
 import Plus from "@/components/icons/Plus.vue";
 

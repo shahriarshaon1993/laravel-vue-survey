@@ -1,6 +1,6 @@
 <script setup>
-import store from "../store";
-import {reactive, ref} from "vue";
+import store from "../../store";
+import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import AnimateSpin from "@/components/icons/AnimateSpin.vue";
 import InputLabel from "@/components/InputLabel.vue";
@@ -12,29 +12,30 @@ import PrimaryButton from "@/components/PrimaryButton.vue";
 const router = useRouter();
 
 const form = reactive({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     remember: false,
 });
 
 let loading = ref(false);
 let errorMsg = ref({});
-let status = ref('');
+let status = ref("");
 
 const submit = (ev) => {
     ev.preventDefault();
     loading.value = true;
-    store.dispatch('login', form)
+    store
+        .dispatch("login", form)
         .then((res) => {
             loading.value = false;
             router.push({
-                name: 'Dashboard'
-            })
+                name: "Dashboard",
+            });
         })
-        .catch(err => {
+        .catch((err) => {
             loading.value = false;
             errorMsg.value = err.response.data.errors ?? {};
-            status.value = err.response.data.error ?? '';
+            status.value = err.response.data.error ?? "";
         });
 };
 </script>
@@ -59,7 +60,11 @@ const submit = (ev) => {
                     autocomplete="username"
                 />
 
-                <InputError v-if="errorMsg.email" class="mt-2" :message="errorMsg.email[0]"/>
+                <InputError
+                    v-if="errorMsg.email"
+                    class="mt-2"
+                    :message="errorMsg.email[0]"
+                />
             </div>
 
             <div class="mt-4">
@@ -74,7 +79,11 @@ const submit = (ev) => {
                     autocomplete="current-password"
                 />
 
-                <InputError v-if="errorMsg.password" class="mt-2" :message="errorMsg.password[0]" />
+                <InputError
+                    v-if="errorMsg.password"
+                    class="mt-2"
+                    :message="errorMsg.password[0]"
+                />
             </div>
 
             <div class="block mt-4">
@@ -86,7 +95,10 @@ const submit = (ev) => {
 
             <div class="flex items-center justify-end mt-4">
                 <PrimaryButton class="ml-4" :disabled="loading">
-                    <AnimateSpin v-if="loading" class="-ml-1 mr-3 h-5 w-5 text-white"/>
+                    <AnimateSpin
+                        v-if="loading"
+                        class="-ml-1 mr-3 h-5 w-5 text-white"
+                    />
                     Log in
                 </PrimaryButton>
             </div>

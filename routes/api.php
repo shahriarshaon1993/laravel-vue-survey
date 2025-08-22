@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\SurveyReportController;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -19,11 +20,11 @@ use App\Http\Controllers\DashboardController;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::middleware('role:admin')->group(function () {
-        Route::get('/user', function (Request $request) {
-            return $request->user();
-        });
+    Route::get('/me', function (Request $request) {
+        return new UserResource($request->user());
+    });
 
+    Route::middleware('role:admin')->group(function () {
         Route::resource('/survey', SurveyController::class);
 
         Route::get('/dashboard', [DashboardController::class, 'index']);

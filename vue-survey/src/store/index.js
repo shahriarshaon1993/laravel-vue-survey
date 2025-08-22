@@ -4,8 +4,8 @@ import axiosClient from "../axios";
 const store = createStore({
     state: {
         user: {
-            data: JSON.parse(sessionStorage.getItem("USER")),
-            token: sessionStorage.getItem("TOKEN"),
+            data: {},
+            token: localStorage.getItem("_TOKEN"),
         },
         dashboard: {
             loading: false,
@@ -113,13 +113,13 @@ const store = createStore({
         },
         register({ commit }, user) {
             return axiosClient.post("/register", user).then(({ data }) => {
-                commit("setUser", data);
+                commit("setToken", data);
                 return data;
             });
         },
         login({ commit }, user) {
             return axiosClient.post("/login", user).then(({ data }) => {
-                commit("setUser", data);
+                commit("setToken", data);
                 return data;
             });
         },
@@ -127,6 +127,14 @@ const store = createStore({
             return axiosClient.post("/logout").then((response) => {
                 commit("logout");
                 return response;
+            });
+        },
+        getMe({ commit }) {
+            if (!this.state.user.token) return;
+
+            return axiosClient.get("/me").then(({ data }) => {
+                commit("setUser", data);
+                return data;
             });
         },
     },
@@ -160,16 +168,18 @@ const store = createStore({
             state.user.data = {};
             state.user.token = null;
 
-            sessionStorage.removeItem("USER");
-            sessionStorage.removeItem("TOKEN");
+            localStorage.removeItem("_TOKEN");
         },
 
-        setUser: (state, userData) => {
+        setToken: (state, userData) => {
             state.user.token = userData.token;
             state.user.data = userData.user;
 
-            sessionStorage.setItem("TOKEN", userData.token);
-            sessionStorage.setItem("USER", JSON.stringify(userData.user));
+            localStorage.setItem("_TOKEN", userData.token);
+        },
+
+        setUser: (state, userData) => {
+            state.user.data = userData.data;
         },
 
         notify: (state, { message, type }) => {
