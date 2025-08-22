@@ -78,7 +78,7 @@ store.dispatch("getDashboardData");
                     <div class="flex justify-between text-sm">
                         <div>Status:</div>
                         <div
-                            class="bg-rose-600 text-white text-xs py-1 px-2 rounded-md"
+                            class="bg-purple-400 text-white text-xs py-1 px-2 rounded-md"
                         >
                             {{ data.latestSurvey.status ? "Active" : "Draft" }}
                         </div>
