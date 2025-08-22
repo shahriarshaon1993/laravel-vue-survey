@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
@@ -21,13 +22,20 @@ class AuthController extends Controller
             ]
         ]);
 
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $token = '';
+        $user = DB::transaction(function () use ($data) {
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+            ]);
 
-        $token = $user->createToken('main')->plainTextToken;
+            $user->roles()->attach(2);
+
+            $token = $user->createToken('main')->plainTextToken;
+
+            return $user;
+        });
 
         return response([
             'user' => $user,
