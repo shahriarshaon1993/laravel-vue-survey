@@ -10,7 +10,7 @@ defineProps({
 <template>
     <RouterLink
         :to="href"
-        class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
+        class="inline-flex items-center bg-indigo-50 text-indigo-600 cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 text-sm hover:bg-indigo-100"
     >
         <slot />
     </RouterLink>

@@ -104,11 +104,11 @@ const participants = computed(() => surveyInfo.value?.total_responses ?? 0);
             <!-- Questions -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
                 <QuestionReport
-                    v-for="(question, index) in report.questions"
+                    v-for="question in report.questions"
                     :key="question.id"
                     :question="question"
                     class="animate-fade-in-down"
-                    :style="{ animationDelay: `${index * 0.9}s` }"
+                    style="animation-delay: 0.6s"
                 />
             </div>
 

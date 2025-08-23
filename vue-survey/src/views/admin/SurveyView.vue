@@ -2,9 +2,9 @@
 import PageComponent from "@/components/PageComponent.vue";
 import QuestionEditor from "@/components/editor/QuestionEditor.vue";
 import store from "../../store";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { computed, ref, watch } from "vue";
-import { useRoute , useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import DangerButton from "@/components/DangerButton.vue";
 import Trash from "@/components/icons/Trash.vue";
 import Image from "@/components/icons/Image.vue";
@@ -29,25 +29,27 @@ const loading = ref(false);
 
 // create empty survey
 const model = ref({
-    title: '',
+    title: "",
     status: false,
-    expire_date: '',
+    expire_date: "",
     description: null,
     image_url: null,
-    questions: []
+    questions: [],
 });
 
 // Watch to current survey data change and when this happens we update local
-watch(() => store.state.currentSurvey.data, (newVal, oldVal) => {
+watch(
+    () => store.state.currentSurvey.data,
+    (newVal, oldVal) => {
         model.value = {
             ...JSON.parse(JSON.stringify(newVal)),
-            status: newVal.status !== "draft"
+            status: newVal.status !== "draft",
         };
     }
 );
 
 if (route.params.id) {
-    store.dispatch('getSurvey', route.params.id);
+    store.dispatch("getSurvey", route.params.id);
 }
 
 const onImageChoose = (ev) => {
@@ -70,51 +72,49 @@ const addQuestion = (index) => {
         type: "text",
         question: "",
         description: null,
-        data: {}
+        data: {},
     };
 
     model.value.questions.splice(index, 0, newQuestion);
 };
 
 const deleteQuestion = (question) => {
-    model.value.questions = model.value.questions.filter(
-        (q) => q !== question
-    );
+    model.value.questions = model.value.questions.filter((q) => q !== question);
 };
 
 const questionChange = (question) => {
     model.value.questions = model.value.questions.map((q) => {
-        if(q.id === question.id) {
+        if (q.id === question.id) {
             return JSON.parse(JSON.stringify(question));
         }
 
         return q;
     });
-}
+};
 
 const saveSurvey = () => {
     store.dispatch("saveSurvey", model.value).then(({ data }) => {
-        store.commit('notify', {
-            type: 'success',
-            message: 'Survey was successfully updated'
+        store.commit("notify", {
+            type: "success",
+            message: "Survey was successfully updated",
         });
         loading.value = false;
         router.push({
-            name: 'SurveyView',
-            params: { id: data.data.id }
+            name: "SurveyView",
+            params: { id: data.data.id },
         });
     });
 };
 
 const deleteSurvey = () => {
-    if(confirm(`Are you sure you want to delete this survey ?`)) {
-        store.dispatch('deleteSurvey', model.value.id).then(() => {
+    if (confirm(`Are you sure you want to delete this survey ?`)) {
+        store.dispatch("deleteSurvey", model.value.id).then(() => {
             router.push({
-                name: "Surveys"
+                name: "Surveys",
             });
         });
     }
-}
+};
 </script>
 
 <template>
@@ -122,14 +122,22 @@ const deleteSurvey = () => {
         <template v-slot:header>
             <div class="flex items-center justify-between">
                 <h1 class="text-xl font-bold text-gray-900">
-                    {{ route.params.id ? model.title : 'Create a survey' }}
+                    {{ route.params.id ? model.title : "Create a survey" }}
                 </h1>
-                <DangerButton v-if="route.params.id" type="button" @click="deleteSurvey()">
-                    <Trash class="w-4 h-4 mt-[1px] mr-1 inline-block"/>
+                <DangerButton
+                    v-if="route.params.id"
+                    type="button"
+                    @click="deleteSurvey()"
+                >
+                    <Trash class="w-4 h-4 mt-[1px] mr-1 inline-block" />
                     Delete Survey
                 </DangerButton>
 
-                <PrimaryLink v-else :href="{ name: 'Surveys' }">
+                <PrimaryLink
+                    class="py-2 px-4 rounded-md"
+                    v-else
+                    :href="{ name: 'Surveys' }"
+                >
                     Surveys
                 </PrimaryLink>
             </div>
@@ -147,13 +155,27 @@ const deleteSurvey = () => {
                             Image
                         </label>
                         <div class="mt-1 flex items-center">
-                            <img v-if="model.image_url" :src="model.image_url" :alt="model.title" class="w-64 h-48 object-cover">
-                            <span v-else class="flex items-center justify-center h-16 w-16 rounded-full overflow-hidden bg-gray-100">
-                                <Image class="h-[80%] w-[80%] text-gray-300"/>
+                            <img
+                                v-if="model.image_url"
+                                :src="model.image_url"
+                                :alt="model.title"
+                                class="w-64 h-48 object-cover"
+                            />
+                            <span
+                                v-else
+                                class="flex items-center justify-center h-16 w-16 rounded-full overflow-hidden bg-gray-100"
+                            >
+                                <Image class="h-[80%] w-[80%] text-gray-300" />
                             </span>
 
-                            <SeconderyButton class="relative overflow-hidden ml-3">
-                                <input type="file" @change="onImageChoose" class="absolute left-0 top-0 right-0 bottom-0 opacity-0 cursor-pointer">
+                            <SeconderyButton
+                                class="relative overflow-hidden ml-3"
+                            >
+                                <input
+                                    type="file"
+                                    @change="onImageChoose"
+                                    class="absolute left-0 top-0 right-0 bottom-0 opacity-0 cursor-pointer"
+                                />
                                 Upload
                             </SeconderyButton>
                         </div>
@@ -205,8 +227,14 @@ const deleteSurvey = () => {
                     <!--Status-->
                     <div>
                         <label class="flex items-center">
-                            <Checkbox name="status" v-model:checked="model.status" class="h-4 w-4"/>
-                            <span class="ml-2 text-sm text-gray-600">Active</span>
+                            <Checkbox
+                                name="status"
+                                v-model:checked="model.status"
+                                class="h-4 w-4"
+                            />
+                            <span class="ml-2 text-sm text-gray-600"
+                                >Active</span
+                            >
                         </label>
                     </div>
                     <!--/.Status-->
@@ -214,20 +242,28 @@ const deleteSurvey = () => {
                 <!--/. Survey Field -->
 
                 <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
-                    <h3 class="text-2xl font-semibold flex items-center justify-between">
+                    <h3
+                        class="text-2xl font-semibold flex items-center justify-between"
+                    >
                         Questions
 
                         <SeconderyButton type="button" @click="addQuestion">
-                            <Plus class="h-4 w-4 mr-1"/>
+                            <Plus class="h-4 w-4 mr-1" />
                             Add Question
                         </SeconderyButton>
                     </h3>
 
-                    <div v-if="!model.questions.length" class="text-center text-gray-600">
+                    <div
+                        v-if="!model.questions.length"
+                        class="text-center text-gray-600"
+                    >
                         You don't have any question created
                     </div>
 
-                    <div v-for="(question, index) in model.questions" :key="question.id">
+                    <div
+                        v-for="(question, index) in model.questions"
+                        :key="question.id"
+                    >
                         <QuestionEditor
                             :index="index"
                             :question="question"
@@ -238,8 +274,15 @@ const deleteSurvey = () => {
                     </div>
                 </div>
                 <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                    <PrimaryButton type="submit" :disabled="loading">
-                        <AnimateSpin v-if="loading" class="-ml-1 mr-3 h-5 w-5 text-white"/>
+                    <PrimaryButton
+                        class="py-2 px-4 rounded-md"
+                        type="submit"
+                        :disabled="loading"
+                    >
+                        <AnimateSpin
+                            v-if="loading"
+                            class="-ml-1 mr-3 h-5 w-5 text-white"
+                        />
                         Save
                     </PrimaryButton>
                 </div>

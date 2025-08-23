@@ -49,6 +49,7 @@ const emit = defineEmits(["delete"]);
         <div class="flex justify-between">
             <div class="flex gap-2">
                 <PrimaryLink
+                    class="py-2 px-3 rounded-md"
                     :href="{
                         name: 'SurveyView',
                         params: { id: survey.id },
@@ -58,6 +59,7 @@ const emit = defineEmits(["delete"]);
                 </PrimaryLink>
 
                 <SeconderyLink
+                    class="py-2 px-3 rounded-md"
                     :href="{
                         name: 'SurveyReport',
                         params: { slug: survey.slug },

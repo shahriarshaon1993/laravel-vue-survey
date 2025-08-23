@@ -98,6 +98,7 @@ store.dispatch("getDashboardData");
 
                 <div class="flex justify-between">
                     <PrimaryLink
+                        class="py-2 px-3 rounded-md"
                         :href="{
                             name: 'SurveyView',
                             params: { id: data.latestSurvey.id },
@@ -108,6 +109,7 @@ store.dispatch("getDashboardData");
                     </PrimaryLink>
 
                     <SeconderyLink
+                        class="py-2 px-3 rounded-md"
                         :href="{
                             name: 'SurveyReport',
                             params: { slug: data.latestSurvey.slug },

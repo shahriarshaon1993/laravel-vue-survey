@@ -1,5 +1,5 @@
 <script setup>
-import store from "../../store";
+import store from "@/store";
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import AnimateSpin from "@/components/icons/AnimateSpin.vue";
@@ -94,7 +94,10 @@ const submit = (ev) => {
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <PrimaryButton class="ml-4" :disabled="loading">
+                <PrimaryButton
+                    class="ml-4 px-4 py-2 rounded"
+                    :disabled="loading"
+                >
                     <AnimateSpin
                         v-if="loading"
                         class="-ml-1 mr-3 h-5 w-5 text-white"

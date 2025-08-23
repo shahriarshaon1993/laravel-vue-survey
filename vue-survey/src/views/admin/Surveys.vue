@@ -37,7 +37,10 @@ function getForPage(ev, link) {
         <template v-slot:header>
             <div class="flex justify-between items-center">
                 <h1 class="text-xl font-bold text-gray-900">Surveys</h1>
-                <PrimaryLink :href="{ name: 'SurveyCreate' }">
+                <PrimaryLink
+                    class="py-2 px-4 rounded-md"
+                    :href="{ name: 'SurveyCreate' }"
+                >
                     <Plus class="w-4 h-4 mr-2" />
                     Add Survey
                 </PrimaryLink>
