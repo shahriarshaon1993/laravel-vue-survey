@@ -8,11 +8,12 @@ import AuthenticationLayout from "@/layouts/AuthenticationLayout.vue";
 
 // Pages
 import Dashboard from "@/views/admin/Dashboard.vue";
-import Surveys from "@/views/admin/Surveys.vue";
+import AdminSurveys from "@/views/admin/Surveys.vue";
 import SurveyView from "@/views/admin/SurveyView.vue";
 import SurveyReport from "@/views/admin/SurveyReport.vue";
 import Home from "@/views/Home.vue";
 import NotFound from "@/views/NotFound.vue";
+import SurveysView from "@/views/Surveys.vue";
 import SurveyPublicView from "@/views/SurveyPublicView.vue";
 import Login from "@/views/auth/Login.vue";
 import Register from "@/views/auth/Register.vue";
@@ -33,7 +34,7 @@ const routes = [
             {
                 path: "surveys",
                 name: "Surveys",
-                component: Surveys,
+                component: AdminSurveys,
                 meta: { roles: ["admin"] },
             },
             {
@@ -63,6 +64,7 @@ const routes = [
         component: GuestLayout,
         children: [
             { path: "", name: "Home", component: Home },
+            { path: "surveys", name: "SurveysView", component: SurveysView },
             {
                 path: "view/survey/:slug",
                 name: "SurveyPublicView",

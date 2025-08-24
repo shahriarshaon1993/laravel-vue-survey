@@ -9,6 +9,10 @@ import SeconderyLink from "@/components/SeconderyLink.vue";
 
 const { survey } = defineProps({
     survey: Object,
+    isActions: {
+        type: Boolean,
+        default: true,
+    },
 });
 
 const emit = defineEmits(["delete"]);
@@ -29,7 +33,7 @@ const emit = defineEmits(["delete"]);
         </a>
 
         <div class="space-y-1">
-            <div class="flex justify-end text-sm">
+            <div v-if="isActions" class="flex justify-end text-sm">
                 <div
                     class="bg-purple-400 text-white text-xs py-1 px-2 rounded-md"
                 >
@@ -46,7 +50,7 @@ const emit = defineEmits(["delete"]);
             <div v-html="survey.short_description"></div>
         </div>
 
-        <div class="flex justify-between">
+        <div v-if="isActions" class="flex justify-between">
             <div class="flex gap-2">
                 <PrimaryLink
                     class="py-2 px-3 rounded-md"

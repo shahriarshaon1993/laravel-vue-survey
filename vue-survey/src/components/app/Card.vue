@@ -1,6 +1,6 @@
 <template>
     <div
-        class="bg-white rounded-xl relative z-0 overflow-hidden after:z-10 after:content-[''] after:absolute after:inset-0 after:outline-2 after:outline after:-outline-offset-2 after:rounded-xl after:outline-white/20 after:pointer-events-none scale-general"
+        class="bg-gray-100 rounded-xl relative z-0 overflow-hidden after:z-10 after:content-[''] after:absolute after:inset-0 after:outline-2 after:outline after:-outline-offset-2 after:rounded-xl after:outline-white/40 after:pointer-events-none scale-general"
     >
         <slot />
     </div>

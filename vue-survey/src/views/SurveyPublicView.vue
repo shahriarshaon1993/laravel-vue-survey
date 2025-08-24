@@ -71,7 +71,7 @@ onMounted(() => store.dispatch("getSurveyBySlug", route.params.slug));
     <div class="flex items-center justify-center min-h-screen">
         <div
             v-if="surveyFinished"
-            class="py-8 px-6 bg-emerald-400 text-white w-[600px] mx-auto shadow-md rounded-md"
+            class="py-8 px-6 bg-gray-100 text-gray-900 w-[600px] mx-auto shadow-md rounded-md"
         >
             <div class="text-xl mb-3 font-semibold">
                 Thank you for participating in this survey
@@ -89,7 +89,7 @@ onMounted(() => store.dispatch("getSurveyBySlug", route.params.slug));
             <div v-if="loading" class="flex justify-center">Loading...</div>
             <div v-else class="w-full max-w-3xl">
                 <form @submit.prevent="submitSurvey">
-                    <div class="bg-gray-300 rounded-xl shadow-md">
+                    <div class="bg-gray-100 rounded-xl shadow-md">
                         <div class="text-center py-6">
                             <h1 class="text-3xl font-bold mb-3">
                                 {{ survey.title }}

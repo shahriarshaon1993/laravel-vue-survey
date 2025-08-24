@@ -90,6 +90,17 @@ const store = createStore({
                 return res;
             });
         },
+        getPublicSurveys({ commit }, { url = null } = {}) {
+            url = url || "/surveys";
+            commit("setSurveysLoading", true);
+
+            return axiosClient.get(url).then((res) => {
+                commit("setSurveysLoading", false);
+                commit("setSurveys", res.data);
+
+                return res;
+            });
+        },
         deleteSurvey({}, id) {
             return axiosClient.delete(`/survey/${id}`);
         },

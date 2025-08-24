@@ -60,11 +60,12 @@ function logout() {
                             </RouterLink>
                         </li>
                         <li>
-                            <a
-                                href="javascript:;"
+                            <RouterLink
+                                :to="{ name: 'SurveysView' }"
                                 class="text-gray-500 text-base lg:text-base font-medium hover:text-indigo-700 transition-all duration-500 mb-2 block lg:mr-6 md:mb-0 lg:text-left"
-                                >Surveys</a
                             >
+                                Surveys
+                            </RouterLink>
                         </li>
                     </ul>
                     <div

@@ -35,7 +35,7 @@ const { isAdmin, isAuth } = useAuthentication();
             <PrimaryLink
                 v-else
                 class="rounded-full px-6 py-3"
-                :href="{ name: 'Register' }"
+                :href="{ name: 'SurveysView' }"
             >
                 Surveys
                 <IconChevronRight class="ml-2 h-5 w-5" />

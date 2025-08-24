@@ -32,10 +32,12 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{survey:slug}/report', [SurveyReportController::class, 'show']);
     });
 
+    Route::get('/survey-by-slug/{survey:slug}', [SurveyController::class, 'showForGuest']);
+    Route::post('/survey/{survey}/answer', [SurveyController::class, 'storeAnswer']);
+
     Route::post('/logout', [AuthController::class, 'logout']);
 });
-Route::get('/survey-by-slug/{survey:slug}', [SurveyController::class, 'showForGuest']);
-Route::post('/survey/{survey}/answer', [SurveyController::class, 'storeAnswer']);
+Route::get('/surveys', [SurveyController::class, 'publicSurveys']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);

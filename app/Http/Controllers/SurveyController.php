@@ -35,6 +35,20 @@ class SurveyController extends Controller
     }
 
     /**
+     * Display a listing of the public resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function publicSurveys(Request $request): AnonymousResourceCollection
+    {
+        return SurveyResource::collection(
+            Survey::query()
+                ->where('status', 1)
+                ->paginate(10)
+        );
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreSurveyRequest  $request
