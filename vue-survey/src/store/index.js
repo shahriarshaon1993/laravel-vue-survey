@@ -7,6 +7,11 @@ const store = createStore({
             data: {},
             token: localStorage.getItem("_TOKEN"),
         },
+        users: {
+            loading: false,
+            data: [],
+            links: [],
+        },
         dashboard: {
             loading: false,
             data: {},
@@ -101,8 +106,21 @@ const store = createStore({
                 return res;
             });
         },
+        getUsers({ commit }, { url = null } = {}) {
+            url = url || "/users";
+            commit("setUsersLoading", true);
+            return axiosClient.get(url).then((res) => {
+                commit("setUsersLoading", false);
+                commit("setUsers", res.data);
+
+                return res;
+            });
+        },
         deleteSurvey({}, id) {
             return axiosClient.delete(`/survey/${id}`);
+        },
+        deleteUser({}, id) {
+            return axiosClient.delete(`/users/${id}`);
         },
         getSurveyBySlug({ commit }, slug) {
             commit("setCurrentSurveyLoading", true);
@@ -173,6 +191,15 @@ const store = createStore({
         setSurveys: (state, surveys) => {
             state.surveys.links = surveys.meta.links;
             state.surveys.data = surveys.data;
+        },
+
+        setUsersLoading: (state, loading) => {
+            state.users.loading = loading;
+        },
+
+        setUsers: (state, users) => {
+            state.users.links = users.meta.links;
+            state.users.data = users.data;
         },
 
         logout: (state) => {

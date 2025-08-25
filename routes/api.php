@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\SurveyReportController;
+use App\Http\Controllers\UserController;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,11 +26,13 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::middleware('role:admin')->group(function () {
-        Route::resource('/survey', SurveyController::class);
-
         Route::get('/dashboard', [DashboardController::class, 'index']);
 
+        Route::resource('/survey', SurveyController::class);
         Route::get('/{survey:slug}/report', [SurveyReportController::class, 'show']);
+
+        Route::get('/users', [UserController::class, 'index']);
+        Route::delete('/users/{user}', [UserController::class, 'destroy']);
     });
 
     Route::get('/surveys', [SurveyController::class, 'publicSurveys']);
