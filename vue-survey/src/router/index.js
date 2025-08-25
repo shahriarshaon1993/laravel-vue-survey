@@ -8,9 +8,9 @@ import AuthenticationLayout from "@/layouts/AuthenticationLayout.vue";
 
 // Pages
 import Dashboard from "@/views/admin/Dashboard.vue";
-import AdminSurveys from "@/views/admin/Surveys.vue";
-import SurveyView from "@/views/admin/SurveyView.vue";
-import SurveyReport from "@/views/admin/SurveyReport.vue";
+import AdminSurveys from "@/views/admin/survey/Surveys.vue";
+import SurveyView from "@/views/admin/survey/SurveyView.vue";
+import SurveyReport from "@/views/admin/survey/SurveyReport.vue";
 import Home from "@/views/Home.vue";
 import NotFound from "@/views/NotFound.vue";
 import SurveysView from "@/views/Surveys.vue";

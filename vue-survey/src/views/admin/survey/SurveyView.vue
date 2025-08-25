@@ -1,7 +1,7 @@
 <script setup>
 import PageComponent from "@/components/PageComponent.vue";
 import QuestionEditor from "@/components/editor/QuestionEditor.vue";
-import store from "../../store";
+import store from "../../../store";
 import { v4 as uuidv4 } from "uuid";
 import { computed, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";

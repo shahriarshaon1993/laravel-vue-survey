@@ -19,7 +19,7 @@ const emit = defineEmits(["delete"]);
 </script>
 
 <template>
-    <Card class="break-inside-avoid p-4 mb-6 relative space-y-6">
+    <Card class="break-inside-avoid p-4 relative space-y-6">
         <div
             v-if="!isActions && survey.participated"
             class="absolute top-0 left-0 w-full h-full z-20"

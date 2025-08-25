@@ -50,7 +50,7 @@ function getForPage(ev, link) {
         <div v-if="surveys.loading" class="flex justify-center">Loading...</div>
 
         <template v-else>
-            <div class="columns-1 md:columns-3 gap-6">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
                 <SurveyListItem
                     v-for="(survey, index) in surveys.data"
                     :key="survey.id"
