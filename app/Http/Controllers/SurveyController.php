@@ -28,24 +28,37 @@ class SurveyController extends Controller
     public function index(Request $request): AnonymousResourceCollection
     {
         $user = $request->user();
-        return SurveyResource::collection(
-            Survey::where('user_id', $user->id)
-                ->paginate(10)
-        );
+
+        $surveys = Survey::query()
+            ->where('user_id', $user->id)
+            ->withExists(relation: [
+                'answers as participated' => function ($query) use ($user): void {
+                    $query->where('user_id', $user->id);
+                }
+            ])
+            ->paginate(10);
+
+        return SurveyResource::collection($surveys);
     }
 
     /**
      * Display a listing of the public resource.
      *
-     * @return \Illuminate\Http\Response
      */
-    public function publicSurveys(Request $request): AnonymousResourceCollection
+    public function publicSurveys(Request $request)
     {
-        return SurveyResource::collection(
-            Survey::query()
-                ->where('status', 1)
-                ->paginate(10)
-        );
+        $user = $request->user();
+
+        $surveys = Survey::query()
+            ->where('status', 1)
+            ->withExists(relation: [
+                'answers as participated' => function ($query) use ($user): void {
+                    $query->where('user_id', $user->id);
+                }
+            ])
+            ->paginate(10);
+
+        return SurveyResource::collection($surveys);
     }
 
     /**
@@ -106,8 +119,22 @@ class SurveyController extends Controller
     public function storeAnswer(StoreSurveyAnswerRequest $request, Survey $survey)
     {
         $validated = $request->validated();
+        $userId = $request->user()?->id;
+
+        // Check if this user already answered this survey
+        $alreadyAnswered = SurveyAnswer::query()
+            ->where('survey_id', $survey->id)
+            ->where('user_id', $userId)
+            ->exists();
+
+        if ($alreadyAnswered) {
+            return response()->json([
+                'message' => 'You have already participated in this survey.'
+            ], 403);
+        }
 
         $surveyAnswer = SurveyAnswer::create([
+            'user_id' => $userId,
             'survey_id' => $survey->id,
             'start_date' => date('Y-m-d H:i:s'),
             'end_date' => date('Y-m-d H:i:s'),

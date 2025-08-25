@@ -4,7 +4,7 @@ import { useRoute } from "vue-router";
 import { computed, ref, onMounted } from "vue";
 import ArrowLeft from "@/components/icons/ArrowLeft.vue";
 import ArrowRight from "@/components/icons/ArrowRight.vue";
-import SurveyButton from "@/components/SurveyButton.vue";
+import PrimaryLink from "@/components/PrimaryLink.vue";
 import PrimaryButton from "@/components/PrimaryButton.vue";
 import QuestionViewer from "@/components/viewer/QuestionViewer.vue";
 
@@ -14,6 +14,7 @@ const store = useStore();
 const loading = computed(() => store.state.currentSurvey.loading);
 const survey = computed(() => store.state.currentSurvey.data);
 
+const isParticipated = ref(false);
 const surveyFinished = ref(false);
 
 const step = ref(0);
@@ -55,6 +56,11 @@ function submitSurvey() {
             if (response.status === 201) {
                 surveyFinished.value = true;
             }
+        })
+        .catch((error) => {
+            if (error.status === 403) {
+                isParticipated.value = true;
+            }
         });
 }
 
@@ -68,7 +74,13 @@ onMounted(() => store.dispatch("getSurveyBySlug", route.params.slug));
 </script>
 
 <template>
-    <div class="flex items-center justify-center min-h-screen">
+    <div class="flex flex-col items-center justify-center min-h-screen">
+        <div
+            v-if="isParticipated"
+            class="bg-indigo-100 text-indigo-700 text-center text-xl lg:text-2xl py-3 px-8 rounded-md my-6"
+        >
+            You have already participated in this survey
+        </div>
         <div
             v-if="surveyFinished"
             class="py-8 px-6 bg-gray-100 text-gray-900 w-[600px] mx-auto shadow-md rounded-md"
@@ -76,13 +88,13 @@ onMounted(() => store.dispatch("getSurveyBySlug", route.params.slug));
             <div class="text-xl mb-3 font-semibold">
                 Thank you for participating in this survey
             </div>
-            <PrimaryButton
-                type="button"
+            <PrimaryLink
+                :href="{ name: 'SurveysView' }"
                 @click="submitAnotherResponse"
                 class="px-6 py-3 rounded-md"
             >
                 Submit another response
-            </PrimaryButton>
+            </PrimaryLink>
         </div>
 
         <template v-else>

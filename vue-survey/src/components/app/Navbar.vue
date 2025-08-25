@@ -50,16 +50,15 @@ function logout() {
                     <ul
                         class="flex lg:items-center flex-col max-lg:gap-4 mt-4 lg:mt-0 lg:flex-row max-lg:mb-4"
                     >
-                        <li>
+                        <li v-if="isAdmin">
                             <RouterLink
-                                v-if="isAdmin"
                                 :to="{ name: 'Dashboard' }"
                                 class="text-gray-500 text-base lg:text-base font-medium hover:text-indigo-700 transition-all duration-500 mb-2 block lg:mr-6 md:mb-0 lg:text-left"
                             >
                                 Dashboard
                             </RouterLink>
                         </li>
-                        <li>
+                        <li v-if="isAuth">
                             <RouterLink
                                 :to="{ name: 'SurveysView' }"
                                 class="text-gray-500 text-base lg:text-base font-medium hover:text-indigo-700 transition-all duration-500 mb-2 block lg:mr-6 md:mb-0 lg:text-left"

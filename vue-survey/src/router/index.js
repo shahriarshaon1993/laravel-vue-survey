@@ -64,7 +64,12 @@ const routes = [
         component: GuestLayout,
         children: [
             { path: "", name: "Home", component: Home },
-            { path: "surveys", name: "SurveysView", component: SurveysView },
+            {
+                path: "surveys",
+                name: "SurveysView",
+                component: SurveysView,
+                meta: { requiresAuth: true, roles: ["admin", "guest"] },
+            },
             {
                 path: "view/survey/:slug",
                 name: "SurveyPublicView",

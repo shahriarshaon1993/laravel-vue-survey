@@ -20,6 +20,10 @@ const emit = defineEmits(["delete"]);
 
 <template>
     <Card class="break-inside-avoid p-4 mb-6 relative space-y-6">
+        <div
+            v-if="!isActions && survey.participated"
+            class="absolute top-0 left-0 w-full h-full z-20"
+        ></div>
         <a
             :href="`/view/survey/${survey.slug}`"
             target="_blank"
@@ -39,6 +43,13 @@ const emit = defineEmits(["delete"]);
                 >
                     {{ survey.status ? "Active" : "Draft" }}
                 </div>
+            </div>
+
+            <div
+                v-if="!isActions && survey.participated"
+                class="bg-green-400 text-white text-xs py-1 px-2 rounded-md inline-block"
+            >
+                Already Participated
             </div>
 
             <h3 class="font-bold text-xl hover:underline">
