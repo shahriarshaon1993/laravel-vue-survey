@@ -11,6 +11,7 @@ import Dashboard from "@/views/admin/Dashboard.vue";
 import AdminSurveys from "@/views/admin/survey/Surveys.vue";
 import SurveyView from "@/views/admin/survey/SurveyView.vue";
 import SurveyReport from "@/views/admin/survey/SurveyReport.vue";
+import AdminUsers from "@/views/admin/user/Users.vue";
 import Home from "@/views/Home.vue";
 import NotFound from "@/views/NotFound.vue";
 import SurveysView from "@/views/Surveys.vue";
@@ -53,6 +54,12 @@ const routes = [
                 path: "reports/surveys/:slug",
                 name: "SurveyReport",
                 component: SurveyReport,
+                meta: { roles: ["admin"] },
+            },
+            {
+                path: "users",
+                name: "Users",
+                component: AdminUsers,
                 meta: { roles: ["admin"] },
             },
         ],

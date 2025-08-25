@@ -14,6 +14,7 @@ const router = useRouter();
 const navigation = [
     { name: "Dashboard", to: { name: "Dashboard" } },
     { name: "Surveys", to: { name: "Surveys" } },
+    { name: "Users", to: { name: "Users" } },
 ];
 
 function logout() {
