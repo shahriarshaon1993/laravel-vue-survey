@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class RoleSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +15,11 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        Role::create(['name' => 'admin']);
-        Role::create(['name' => 'guest']);
+        $user = User::factory()->create([
+            'name' => 'John Doe',
+            'email' => 'admin@example.com',
+        ]);
+
+        $user->roles()->attach(1);
     }
 }

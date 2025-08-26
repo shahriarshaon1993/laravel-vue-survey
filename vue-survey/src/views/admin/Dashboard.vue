@@ -49,6 +49,7 @@ store.dispatch("getDashboardData");
             </Card>
 
             <Card
+                v-if="data.latestSurvey"
                 class="row-span-2 order-3 lg:order-1 p-4 animate-fade-in-down space-y-3"
                 style="animation-delay: 0.3s"
             >

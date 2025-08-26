@@ -18,6 +18,7 @@ const report = ref({
     timeline: {},
     questions: [],
     completion: null,
+    user_reports: [],
 });
 
 async function fetchReport() {

@@ -11,9 +11,7 @@ import Image from "@/components/icons/Image.vue";
 import SeconderyButton from "@/components/SeconderyButton.vue";
 import TextInput from "@/components/TextInput.vue";
 import InputLabel from "@/components/InputLabel.vue";
-import InputError from "@/components/InputError.vue";
 import PrimaryLink from "@/components/PrimaryLink.vue";
-import ArrowLeft from "@/components/icons/ArrowLeft.vue";
 import TextareaInput from "@/components/TextareaInput.vue";
 import Checkbox from "@/components/Checkbox.vue";
 import Plus from "@/components/icons/Plus.vue";
@@ -152,7 +150,7 @@ const deleteSurvey = () => {
                     <!-- Image -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700">
-                            Image
+                            Image (640x360)
                         </label>
                         <div class="mt-1 flex items-center">
                             <img

@@ -20,13 +20,31 @@ class SurveyReportController extends Controller
             'total_responses' => $survey->answers()->count(),
         ];
 
-        // 2. Participation Timeline (daily count)
+        // User wise participation
+        $userReports = $survey->answers()
+            ->with(['user', 'answers.question'])
+            ->get()->map(function ($answer) {
+                return [
+                    'user' => $answer->user ? $answer->user->only(['id', 'name', 'email']) : null,
+                    'started_at' => $answer->start_date,
+                    'completed_at' => $answer->end_date,
+                    'responses' => $answer->answers->map(function ($a) {
+                        return [
+                            'question' => $a->question ? $a->question->question : null,
+                            'type' => $a->question ? $a->question->type : null,
+                            'answer' => $a->answer,
+                        ];
+                    }),
+                ];
+            });
+
+        // Participation Timeline (daily count)
         $timeline = $survey->answers()
             ->selectRaw('DATE(start_date) as date, COUNT(*) as total')
             ->groupBy('date')
             ->pluck('total', 'date');
 
-        // 3. Question-wise Report
+        // Question-wise Report
         $questions = $survey->questions()
             ->with('answers')
             ->get()->map(function ($q) {
@@ -65,7 +83,7 @@ class SurveyReportController extends Controller
                 return $report;
             });
 
-        // 4. Completion Report
+        // Completion Report
         $completion = [
             'started' => $survey->answers()->count(),
             'completed' => $survey->answers()->whereNotNull('end_date')->count(),
@@ -81,6 +99,7 @@ class SurveyReportController extends Controller
             'timeline' => $timeline,
             'questions' => $questions,
             'completion' => $completion,
+            'user_reports' => $userReports,
         ]);
     }
 }
