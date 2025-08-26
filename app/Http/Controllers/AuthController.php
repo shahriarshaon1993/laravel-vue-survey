@@ -74,10 +74,11 @@ class AuthController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
-        // return $user;
-
         // Revoke the token that was used to authentication the current request
-        $user->currentAccessToken()->delete();
+        $token = $user->currentAccessToken();
+        if ($token && method_exists($token, 'delete')) {
+            $token->delete();
+        }
 
         return response([
             'success' => true
