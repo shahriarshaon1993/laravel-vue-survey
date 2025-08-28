@@ -8,6 +8,7 @@ import TextInput from "@/components/TextInput.vue";
 import InputError from "@/components/InputError.vue";
 import Checkbox from "@/components/Checkbox.vue";
 import PrimaryButton from "@/components/PrimaryButton.vue";
+import SeconderyButton from "@/components/SeconderyButton.vue";
 
 const router = useRouter();
 
@@ -37,6 +38,11 @@ const submit = (ev) => {
             errorMsg.value = err.response.data.errors ?? {};
             status.value = err.response.data.error ?? "";
         });
+};
+
+const handleCopyAdmin = () => {
+    form.email = "admin@example.com";
+    form.password = "password";
 };
 </script>
 
@@ -93,7 +99,10 @@ const submit = (ev) => {
                 </label>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-between mt-4">
+                <SeconderyButton @click="handleCopyAdmin">
+                    Copy Admin
+                </SeconderyButton>
                 <PrimaryButton
                     class="ml-4 px-4 py-2 rounded"
                     :disabled="loading"

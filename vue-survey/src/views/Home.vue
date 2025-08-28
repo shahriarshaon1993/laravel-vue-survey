@@ -1,6 +1,7 @@
 <script setup>
 import PrimaryLink from "@/components/PrimaryLink.vue";
 import IconChevronRight from "@/components/icons/ChevronRight.vue";
+import SurveyImage from "@/assets/images/survey.png";
 
 import { useAuthentication } from "@/composables/useAuthentication";
 
@@ -13,16 +14,17 @@ const { isAdmin, isAuth } = useAuthentication();
             class="pt-8 lg:pt-36 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative text-center"
         >
             <h1
-                class="max-w-2xl mx-auto text-center font-manrope font-bold text-4xl text-gray-900 mb-5 md:text-5xl leading-[50px]"
+                class="max-w-4xl mx-auto text-center font-manrope font-bold text-4xl text-gray-900 mb-5 md:text-5xl leading-[50px]"
             >
-                Control your Finances with our
-                <span class="text-indigo-600">Smart Tool </span>
+                Analyze Responses and Understand Your
+                <span class="text-indigo-600">Audience Better</span>
             </h1>
             <p
-                class="max-w-sm mx-auto text-center text-base font-normal leading-7 text-gray-500 mb-12"
+                class="max-w-md mx-auto text-center text-base font-normal leading-7 text-gray-500 mb-12"
             >
-                Invest intelligently and discover a better way to manage your
-                entire wealth easily.
+                Make surveys interactive and user-friendly by offering multiple
+                formats. This ensures participants can respond easily, leading
+                to higher engagement.
             </p>
             <PrimaryLink
                 v-if="!isAuth"
@@ -42,7 +44,7 @@ const { isAdmin, isAuth } = useAuthentication();
             </PrimaryLink>
             <div class="flex justify-center mt-20">
                 <img
-                    src="https://pagedone.io/asset/uploads/1691054543.png"
+                    :src="SurveyImage"
                     alt="Dashboard image"
                     class="rounded-t-3xl h-auto object-cover"
                 />
